@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="01" author="vserdiuk">
+        <createTable tableName="CLIENTS">
+            <column name="id" type="bigint">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="middle_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="inn" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="TRANSACTIONS">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="place" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="amount" type="numeric(7, 2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="currency" type="varchar(3)">
+                <constraints nullable="false" />
+            </column>
+            <column name="card" type="varchar(16)">
+                <constraints nullable="false" />
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_transactions2client"
+                                 baseTableName="TRANSACTIONS"
+                                 baseColumnNames="client_id"
+                                 referencedTableName="CLIENTS"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
